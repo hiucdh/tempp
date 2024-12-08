@@ -1,9 +1,10 @@
 import React from 'react'
+import BannerMenu from '../Components/BannerMenu/BannerMenu'
 
 export const Menu = () => {
     return (
         <div>
-            asdasd
+            <BannerMenu />
         </div>
     )
 }
