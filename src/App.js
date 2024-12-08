@@ -9,9 +9,11 @@ import LoginSignup from './Pages/LoginSignup';
 import Cart from './Pages/Cart';
 import Product from './Pages/Product';
 import Footer from './Components/Footer/Footer';
+import ShopContextProvider from './Context/ShopContext';
+
 function App() {
   return (
-    <div >
+    <ShopContextProvider>
       <BrowserRouter>
         <Navbar />
         <Routes>
@@ -19,15 +21,13 @@ function App() {
           <Route path='/menu' element={<Menu />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/rate' element={<Rate />} />
-          <Route path='/product' element={<Product />} />
-          <Route path=':productId' element={<Product />} />
+          <Route path='/product/:productId' element={<Product />} />
           <Route path='/login' element={<LoginSignup />} />
           <Route path='/cart' element={<Cart />} />
         </Routes>
         <Footer />
       </BrowserRouter>
-
-    </div>
+    </ShopContextProvider>
   );
 }
 

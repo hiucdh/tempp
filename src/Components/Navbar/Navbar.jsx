@@ -12,10 +12,10 @@ export const Navbar = () => {
                 <p>Nha Hang</p>
             </div>
             <ul className="nav-menu">
-                <li onClick={() => { setMenu("main") }}><Link style={{ textDecoration: 'none' }} to='/'>Trang chu</Link>{menu === "main" ? <hr /> : <></>}</li>
-                <li onClick={() => { setMenu("shopping") }}><Link style={{ textDecoration: 'none' }} to='/menu'>Dat Hang</Link>{menu === "shopping" ? <hr /> : <></>}</li>
-                <li onClick={() => { setMenu("contact") }}><Link style={{ textDecoration: 'none' }} to='/contact'>Lien he</Link>{menu === "contact" ? <hr /> : <></>}</li>
-                <li onClick={() => { setMenu("rate") }}><Link style={{ textDecoration: 'none' }} to='/rate'>Danh gia</Link>{menu === "rate" ? <hr /> : <></>}</li>
+                <li onClick={() => { setMenu("main") }}><Link style={{ textDecoration: 'none' }} to='/'>Home</Link>{menu === "main" ? <hr /> : <></>}</li>
+                <li onClick={() => { setMenu("shopping") }}><Link style={{ textDecoration: 'none' }} to='/menu'>Menu</Link>{menu === "shopping" ? <hr /> : <></>}</li>
+                <li onClick={() => { setMenu("contact") }}><Link style={{ textDecoration: 'none' }} to='/contact'>Contact</Link>{menu === "contact" ? <hr /> : <></>}</li>
+                <li onClick={() => { setMenu("rate") }}><Link style={{ textDecoration: 'none' }} to='/rate'>Rate</Link>{menu === "rate" ? <hr /> : <></>}</li>
             </ul>
             <div className="nav-login-cart">
                 <button><Link style={{ textDecoration: 'none' }} to='/login'>Login</Link></button>
