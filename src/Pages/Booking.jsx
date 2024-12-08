@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import './Booking.css'
 import table_data, { updateTableStatus } from '../Components/Assets/table_data'
 import TableStatus from '../Components/TableStatus/TableStatus'
+import { ShopContext } from '../Context/ShopContext'
 
 export const Booking = () => {
     const [availableTables, setAvailableTables] = useState(table_data);
+    const [refreshKey, setRefreshKey] = useState(0);
+    const { clearCart } = useContext(ShopContext);
     const [bookingData, setBookingData] = useState({
         name: '',
         phone: '',
@@ -14,7 +17,6 @@ export const Booking = () => {
         note: '',
         selectedTable: ''
     });
-    const [refreshKey, setRefreshKey] = useState(0);
 
     useEffect(() => {
         setAvailableTables(table_data);
@@ -73,6 +75,8 @@ export const Booking = () => {
         setAvailableTables(updatedTables);
 
         setRefreshKey(old => old + 1);
+
+        clearCart();
 
         const selectedTable = table_data.find(table => table.id === bookingData.selectedTable);
         alert(

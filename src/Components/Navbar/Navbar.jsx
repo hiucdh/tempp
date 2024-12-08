@@ -2,45 +2,57 @@ import React, { useState, useContext } from 'react'
 import './Navbar.css'
 import logo from '../Assets/logo.png'
 import cart_icon from '../Assets/cart_icon.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ShopContext } from '../../Context/ShopContext'
+import { AuthContext } from '../../Context/AuthContext'
 
 export const Navbar = () => {
     const [menu, setMenu] = useState("main")
     const { getTotalCartItems } = useContext(ShopContext)
+    const { user, logout } = useContext(AuthContext)
+    const navigate = useNavigate()
+
+    const handleAuthClick = () => {
+        if (user) {
+            logout();
+            navigate('/');
+        } else {
+            navigate('/login');
+        }
+    }
 
     return (
         <div className='navbar'>
             <div className="nav-logo">
                 <img src={logo} alt='' />
-                <p>Nha Hang</p>
+                <p>RESTAURANT</p>
             </div>
             <ul className="nav-menu">
                 <li onClick={() => { setMenu("main") }}>
-                    <Link style={{ textDecoration: 'none' }} to='/'>Trang chu</Link>
+                    <Link to='/'>Trang chủ</Link>
                     {menu === "main" ? <hr /> : <></>}
                 </li>
-                <li onClick={() => { setMenu("shopping") }}>
-                    <Link style={{ textDecoration: 'none' }} to='/menu'>Dat Hang</Link>
-                    {menu === "shopping" ? <hr /> : <></>}
+                <li onClick={() => { setMenu("menu") }}>
+                    <Link to='/menu'>Thực đơn</Link>
+                    {menu === "menu" ? <hr /> : <></>}
                 </li>
                 <li onClick={() => { setMenu("booking") }}>
-                    <Link style={{ textDecoration: 'none' }} to='/booking'>Dat Ban</Link>
+                    <Link to='/booking'>Đặt bàn</Link>
                     {menu === "booking" ? <hr /> : <></>}
                 </li>
                 <li onClick={() => { setMenu("contact") }}>
-                    <Link style={{ textDecoration: 'none' }} to='/contact'>Lien he</Link>
+                    <Link to='/contact'>Liên hệ</Link>
                     {menu === "contact" ? <hr /> : <></>}
                 </li>
                 <li onClick={() => { setMenu("rate") }}>
-                    <Link style={{ textDecoration: 'none' }} to='/rate'>Danh gia</Link>
+                    <Link to='/rate'>Đánh giá</Link>
                     {menu === "rate" ? <hr /> : <></>}
                 </li>
             </ul>
             <div className="nav-login-cart">
-                <Link to='/login'>
-                    <button>Login</button>
-                </Link>
+                <button onClick={handleAuthClick}>
+                    {user ? 'Đăng xuất' : 'Đăng nhập'}
+                </button>
                 <Link to='/cart'>
                     <img src={cart_icon} alt='' />
                 </Link>

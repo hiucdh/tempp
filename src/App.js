@@ -13,27 +13,43 @@ import Footer from './Components/Footer/Footer';
 import ShopContextProvider from './Context/ShopContext';
 import AvailableTables from './Pages/AvailableTables';
 import BookedTables from './Pages/BookedTables';
+import { AuthProvider } from './Context/AuthContext';
+import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
 
 function App() {
   return (
-    <ShopContextProvider>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path='/' element={<HomePage />} />
-          <Route path='/menu' element={<Menu />} />
-          <Route path='/booking' element={<Booking />} />
-          <Route path='/contact' element={<Contact />} />
-          <Route path='/rate' element={<Rate />} />
-          <Route path='/product/:productId' element={<Product />} />
-          <Route path='/login' element={<LoginSignup />} />
-          <Route path='/cart' element={<Cart />} />
-          <Route path='/available-tables' element={<AvailableTables />} />
-          <Route path='/booked-tables' element={<BookedTables />} />
-        </Routes>
-        <Footer />
-      </BrowserRouter>
-    </ShopContextProvider>
+    <AuthProvider>
+      <ShopContextProvider>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/menu' element={<Menu />} />
+            <Route path='/booking' element={
+              <ProtectedRoute>
+                <Booking />
+              </ProtectedRoute>
+            } />
+            <Route path='/contact' element={<Contact />} />
+            <Route path='/rate' element={<Rate />} />
+            <Route path='/product/:productId' element={<Product />} />
+            <Route path='/login' element={<LoginSignup />} />
+            <Route path='/cart' element={<Cart />} />
+            <Route path='/available-tables' element={
+              <ProtectedRoute>
+                <AvailableTables />
+              </ProtectedRoute>
+            } />
+            <Route path='/booked-tables' element={
+              <ProtectedRoute>
+                <BookedTables />
+              </ProtectedRoute>
+            } />
+          </Routes>
+          <Footer />
+        </BrowserRouter>
+      </ShopContextProvider>
+    </AuthProvider>
   );
 }
 

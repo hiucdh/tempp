@@ -2,10 +2,21 @@ import React, { useContext } from 'react'
 import './Cart.css'
 import { ShopContext } from '../Context/ShopContext'
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../Context/AuthContext';
 
 export const Cart = () => {
     const { cartItems, all_product, removeFromCart, addToCart, getTotalCartAmount } = useContext(ShopContext);
+    const { user } = useContext(AuthContext);
     const navigate = useNavigate();
+
+    const handleBookingClick = () => {
+        if (!user) {
+            alert('Vui lòng đăng nhập để đặt bàn!');
+            navigate('/login');
+            return;
+        }
+        navigate('/booking');
+    }
 
     return (
         <div className='cart'>
@@ -52,7 +63,7 @@ export const Cart = () => {
                     </div>
                     <div className="cart-buttons">
                         <button onClick={() => navigate('/')}>TIẾP TỤC MUA HÀNG</button>
-                        <button onClick={() => navigate('/booking')} className="book-table-btn">
+                        <button onClick={handleBookingClick} className="book-table-btn">
                             ĐẶT BÀN NGAY
                         </button>
                     </div>
@@ -62,7 +73,7 @@ export const Cart = () => {
                     <h2>Giỏ hàng trống</h2>
                     <div className="empty-cart-buttons">
                         <button onClick={() => navigate('/')}>QUAY LẠI MUA HÀNG</button>
-                        <button onClick={() => navigate('/booking')} className="book-table-btn">
+                        <button onClick={handleBookingClick} className="book-table-btn">
                             ĐẶT BÀN NGAY
                         </button>
                     </div>

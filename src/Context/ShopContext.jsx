@@ -1,31 +1,41 @@
-import React, { createContext, useState } from "react";
-import all_product from '../Components/Assets/all_product';
+import React, { createContext, useState, useEffect } from 'react'
+import all_product from '../Components/Assets/all_product'
 
 export const ShopContext = createContext(null);
 
-const getDefaultCart = () => {
-    let cart = {};
-    for (let i = 1; i <= all_product.length; i++) {
-        cart[i] = 0;
+export const ShopContextProvider = (props) => {
+    // Khởi tạo giỏ hàng từ localStorage hoặc tạo mới
+    const getDefaultCart = () => {
+        let cart = {};
+        for (let i = 0; i < all_product.length; i++) {
+            cart[all_product[i].id] = 0;
+        }
+        return cart;
     }
-    return cart;
-}
 
-const ShopContextProvider = (props) => {
-    const [cartItems, setCartItems] = useState(getDefaultCart());
+    const [cartItems, setCartItems] = useState(() => {
+        // Kiểm tra localStorage khi khởi tạo
+        const savedCart = localStorage.getItem('cartItems');
+        return savedCart ? JSON.parse(savedCart) : getDefaultCart();
+    });
+
+    // Lưu giỏ hàng vào localStorage mỗi khi có thay đổi
+    useEffect(() => {
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }, [cartItems]);
 
     const addToCart = (itemId) => {
-        setCartItems((prev) => ({
-            ...prev,
-            [itemId]: prev[itemId] + 1
-        }));
+        setCartItems((prev) => {
+            const updatedCart = { ...prev, [itemId]: (prev[itemId] || 0) + 1 };
+            return updatedCart;
+        });
     }
 
     const removeFromCart = (itemId) => {
-        setCartItems((prev) => ({
-            ...prev,
-            [itemId]: prev[itemId] - 1
-        }));
+        setCartItems((prev) => {
+            const updatedCart = { ...prev, [itemId]: Math.max((prev[itemId] || 0) - 1, 0) };
+            return updatedCart;
+        });
     }
 
     const getTotalCartAmount = () => {
@@ -33,7 +43,7 @@ const ShopContextProvider = (props) => {
         for (const item in cartItems) {
             if (cartItems[item] > 0) {
                 let itemInfo = all_product.find((product) => product.id === Number(item));
-                totalAmount += parseInt(itemInfo.new_price.replace(/\D/g, '')) * cartItems[item];
+                totalAmount += itemInfo.new_price * cartItems[item];
             }
         }
         return totalAmount;
@@ -49,14 +59,21 @@ const ShopContextProvider = (props) => {
         return totalItem;
     }
 
+    const clearCart = () => {
+        const emptyCart = getDefaultCart();
+        setCartItems(emptyCart);
+        localStorage.removeItem('cartItems'); // Xóa giỏ hàng khỏi localStorage
+    }
+
     const contextValue = {
         all_product,
         cartItems,
         addToCart,
         removeFromCart,
         getTotalCartAmount,
-        getTotalCartItems
-    };
+        getTotalCartItems,
+        clearCart
+    }
 
     return (
         <ShopContext.Provider value={contextValue}>

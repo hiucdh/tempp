@@ -2,11 +2,13 @@ import React, { useContext, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
 import './Product.css'
 import { ShopContext } from '../Context/ShopContext';
+import { AuthContext } from '../Context/AuthContext';
 
 export const Product = () => {
     const { productId } = useParams();
     const navigate = useNavigate();
     const { all_product, addToCart } = useContext(ShopContext);
+    const { user } = useContext(AuthContext);
     const [quantity, setQuantity] = useState(1);
 
     if (!all_product) {
@@ -42,6 +44,15 @@ export const Product = () => {
         navigate(`/product/${productId}`);
         window.scrollTo(0, 0);
         setQuantity(1);
+    }
+
+    const handleBookingClick = () => {
+        if (!user) {
+            alert('Vui lòng đăng nhập để đặt bàn!');
+            navigate('/login');
+            return;
+        }
+        navigate('/booking');
     }
 
     return (
@@ -107,7 +118,7 @@ export const Product = () => {
                         <button onClick={handleAddToCart} className="add-to-cart">
                             THÊM VÀO GIỎ HÀNG
                         </button>
-                        <button onClick={() => navigate('/booking')} className="book-table">
+                        <button onClick={handleBookingClick} className="book-table">
                             ĐẶT BÀN NGAY
                         </button>
                     </div>

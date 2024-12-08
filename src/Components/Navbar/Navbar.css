@@ -5,9 +5,9 @@ img {
 
 .navbar {
     display: flex;
-    justify-content: space-around;
-    padding: 16px;
-    box-shadow: 0px 1px 3px -2px black;
+    justify-content: space-between;
+    padding: 16px 60px;
+    box-shadow: 0 1px 3px -2px black;
 }
 
 .nav-logo {
@@ -35,13 +35,18 @@ img {
 .nav-menu li {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     gap: 3px;
     cursor: pointer;
 }
 
-.nav-menu hr {
+.nav-menu li hr {
+    display: none;
+}
+
+.nav-menu li.active hr {
+    display: block;
     border: none;
     width: 80%;
     height: 3px;
@@ -84,7 +89,11 @@ img {
     font-size: 14px;
     background: red;
     color: white;
-    font-weight: 500;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #626262;
 }
 
 /* Thêm animation khi số lượng thay đổi */
