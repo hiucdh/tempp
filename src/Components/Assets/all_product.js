@@ -11,115 +11,134 @@ import ncl6 from './ncl6.webp'
 import ncl7 from './ncl7.webp'
 import ncl8 from './ncl8.webp'
 
-let all_product = [
+const all_product = [
     {
         id: 1,
-        name: "Gỏi ngó sen",
-        category: "khaivi",
+        name: "Gà nướng muối ớt",
+        category: "main_course",
         image: p1_img,
-        new_price: "50.000",
-        old_price: "80.000",
-        description: "Gỏi ngó sen tươi ngon với tôm thịt, ăn kèm rau thơm và nước chấm đặc biệt. Món ăn được chế biến từ những nguyên liệu tươi ngon nhất, đảm bảo vệ sinh an toàn thực phẩm."
+        new_price: 250000,
+        old_price: 280000,
+        isPopular: true,
+        isNewCollection: false
     },
     {
         id: 2,
-        name: "Tôm hùm",
-        category: "monchinh",
+        name: "Cá hồi sốt chanh dây",
+        category: "main_course",
         image: p2_img,
-        new_price: "500.000",
-        old_price: "600.000",
-        description: "Tôm hùm nướng bơ tỏi, thịt tươi ngon, chắc thịt. Được nhập từ những vùng biển sạch, đảm b��o chất lượng cao cấp nhất."
+        new_price: 320000,
+        old_price: 350000,
+        isPopular: true,
+        isNewCollection: true
     },
     {
         id: 3,
-        name: "Salad hoàng đế",
-        category: "khaivi",
+        name: "Bò hầm rượu vang",
+        category: "main_course",
         image: p3_img,
-        new_price: "120.000",
-        old_price: "150.000",
-        description: "Salad hoàng đế với các loại rau củ tươi ngon, kết hợp với sốt đặc biệt của nhà hàng. Món ăn healthy phù hợp với người ăn kiêng."
+        new_price: 380000,
+        old_price: 420000,
+        isPopular: true,
+        isNewCollection: false
     },
     {
         id: 4,
-        name: "Súp đậu hà lan",
-        category: "khaivi",
+        name: "Salad trộn kiểu Ý",
+        category: "appetizer",
         image: p4_img,
-        new_price: "45.000",
-        old_price: "60.000",
-        description: "Súp đậu Hà Lan được nấu từ đậu tươi ngon, kết hợp với các loại rau củ tạo nên hương vị đậm đà, thơm ngon."
+        new_price: 120000,
+        old_price: 150000,
+        isPopular: true,
+        isNewCollection: false
     },
     {
         id: 5,
-        name: "Bò cay",
-        category: "monchinh",
+        name: "Súp hải sản",
+        category: "appetizer",
         image: ncl1,
-        new_price: "150.000",
-        old_price: "180.000",
-        description: "Bò cay được chế biến với công thức đặc biệt, thịt bò mềm, vị cay nồng đặc trưng. Phù hợp với những người thích đồ cay."
+        new_price: 150000,
+        old_price: 180000,
+        isPopular: false,
+        isNewCollection: true
     },
     {
         id: 6,
-        name: "Dồi sụn",
-        category: "khaivi",
+        name: "Bánh mì bơ tỏi",
+        category: "appetizer",
         image: ncl2,
-        new_price: "80.000",
-        old_price: "100.000",
-        description: "Dồi sụn giòn rụm, được chế biến theo công thức gia truyền. Ăn kèm với dưa góp và nước chấm đặc biệt."
+        new_price: 80000,
+        old_price: 100000,
+        isPopular: false,
+        isNewCollection: true
     },
     {
         id: 7,
-        name: "Xúc xích",
-        category: "khaivi",
+        name: "Tiramisu",
+        category: "dessert",
         image: ncl3,
-        new_price: "60.000",
-        old_price: "75.000",
-        description: "Xúc xích được làm từ thịt heo tươi ngon, gia vị tự nhiên. Phù hợp làm món ăn vặt hoặc khai vị."
+        new_price: 90000,
+        old_price: 110000,
+        isPopular: false,
+        isNewCollection: true
     },
     {
         id: 8,
-        name: "Oách xà lách",
-        category: "khaivi",
+        name: "Bánh Chocolate Lava",
+        category: "dessert",
         image: ncl4,
-        new_price: "85.000",
-        old_price: "100.000",
-        description: "Oách xà lách tươi mát, kết hợp với sốt mayonnaise đặc biệt. Món ăn nhẹ nhàng, bổ dưỡng."
+        new_price: 100000,
+        old_price: 120000,
+        isPopular: false,
+        isNewCollection: true
     },
     {
         id: 9,
-        name: "Kim chi",
-        category: "monphu",
+        name: "Kem Vanilla",
+        category: "dessert",
         image: ncl5,
-        new_price: "40.000",
-        old_price: "50.000",
-        description: "Kim chi chuẩn vị Hàn Quốc, được lên men tự nhiên. Vị cay nồng đặc trưng, giòn ngon."
+        new_price: 70000,
+        old_price: 85000,
+        isPopular: false,
+        isNewCollection: false
     },
     {
         id: 10,
-        name: "Nạp xưởng",
-        category: "khaivi",
+        name: "Rượu vang đỏ",
+        category: "beverage",
         image: ncl6,
-        new_price: "90.000",
-        old_price: "120.000",
-        description: "Nạp xưởng thơm ngon, được làm từ thịt heo tươi ngon. Ăn kèm với cơm hoặc làm món nhậu đều ngon."
+        new_price: 850000,
+        old_price: 950000,
+        isPopular: false,
+        isNewCollection: true
     },
     {
         id: 11,
-        name: "Bánh mì bơ",
-        category: "monphu",
+        name: "Cocktail Mojito",
+        category: "beverage",
         image: ncl7,
-        new_price: "25.000",
-        old_price: "35.000",
-        description: "Bánh mì bơ nướng giòn, thơm béo. Phù hợp ăn kèm với các món súp hoặc salad."
+        new_price: 120000,
+        old_price: 150000,
+        isPopular: false,
+        isNewCollection: true
     },
     {
         id: 12,
-        name: "Bánh bao",
-        category: "monphu",
+        name: "Nước ép cam tươi",
+        category: "beverage",
         image: ncl8,
-        new_price: "30.000",
-        old_price: "40.000",
-        description: "Bánh bao nhân thịt, trứng cút. Vỏ bánh mềm, nhân đậm đà, thơm ngon."
+        new_price: 60000,
+        old_price: 75000,
+        isPopular: false,
+        isNewCollection: true
     }
 ];
 
+// Lấy danh sách món ăn phổ biến
+export const popular_products = all_product.filter(item => item.isPopular);
+
+// Lấy danh sách món ăn mới
+export const new_collections = all_product.filter(item => item.isNewCollection);
+
+// Export mặc định tất cả sản phẩm
 export default all_product; 

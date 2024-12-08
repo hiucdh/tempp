@@ -1,6 +1,6 @@
 import React from 'react'
 import './Popular.css'
-import data_product from '../Assets/data'
+import { popular_products } from '../Assets/all_product'
 import Item from '../Item/Item'
 export const Popular = () => {
     return (
@@ -8,7 +8,7 @@ export const Popular = () => {
             <h1>TODAY'S NEW MENU</h1>
             <hr />
             <div className="popular-item">
-                {data_product.map((item, i) => {
+                {popular_products.map((item, i) => {
                     return <Item key={i} id={item.id} name={item.name} image={item.image} new_price={item.new_price} old_price={item.old_price} />
                 })}
             </div>
