@@ -77,7 +77,7 @@ export const Product = () => {
                     <h1>{product.name}</h1>
                     <div className="product-price">
                         <div className="price-new">{product.new_price}đ</div>
-                        <div className="price-old">{product.old_price}đ</div>
+                        {product.old_price && <div className="price-old">{product.old_price}đ</div>}
                         <div className="discount">
                             {Math.round((1 - parseInt(product.new_price.replace(/\D/g, '')) /
                                 parseInt(product.old_price.replace(/\D/g, ''))) * 100)}% GIẢM
@@ -104,10 +104,12 @@ export const Product = () => {
                         </div>
                     </div>
                     <div className="product-actions">
-                        <button className="add-to-cart" onClick={handleAddToCart}>
+                        <button onClick={handleAddToCart} className="add-to-cart">
                             THÊM VÀO GIỎ HÀNG
                         </button>
-                        <button className="buy-now">Đặt Bàn</button>
+                        <button onClick={() => navigate('/booking')} className="book-table">
+                            ĐẶT BÀN NGAY
+                        </button>
                     </div>
                 </div>
             </div>

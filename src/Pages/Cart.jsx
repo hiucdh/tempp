@@ -12,34 +12,38 @@ export const Cart = () => {
             <div className="cart-title">
                 <h1>Giỏ hàng của bạn</h1>
             </div>
-            <div className="cart-items">
-                {all_product.map((item) => {
-                    if (cartItems[item.id] > 0) {
-                        return (
-                            <div key={item.id} className="cart-item">
-                                <div className="cart-item-left">
-                                    <img src={item.image} alt="" />
-                                </div>
-                                <div className="cart-item-right">
-                                    <div className="cart-item-info">
-                                        <h2>{item.name}</h2>
-                                        <p className="cart-item-price">{item.new_price}đ</p>
-                                    </div>
-                                    <div className="cart-item-quantity">
-                                        <button onClick={() => removeFromCart(item.id)}>-</button>
-                                        <span>{cartItems[item.id]}</span>
-                                        <button onClick={() => addToCart(item.id)}>+</button>
-                                    </div>
-                                    <div className="cart-item-total">
-                                        <p>Tổng: {parseInt(item.new_price.replace(/\D/g, '')) * cartItems[item.id]}đ</p>
-                                    </div>
-                                </div>
-                            </div>
-                        )
-                    }
-                    return null;
-                })}
+            <div className="cart-format-main">
+                <p>Món ăn</p>
+                <p>Tiêu đề</p>
+                <p>Giá</p>
+                <p>Số lượng</p>
+                <p>Tổng</p>
+                <p>Xóa</p>
             </div>
+            <hr />
+            {all_product.map((e) => {
+                if (cartItems[e.id] > 0) {
+                    return (
+                        <div key={e.id}>
+                            <div className="cart-format cart-format-main">
+                                <img src={e.image} alt="" className='cart-product-icon' />
+                                <p>{e.name}</p>
+                                <p>{e.new_price}đ</p>
+                                <div className="cart-quantity">
+                                    <button onClick={() => removeFromCart(e.id)}>-</button>
+                                    <p>{cartItems[e.id]}</p>
+                                    <button onClick={() => addToCart(e.id)}>+</button>
+                                </div>
+                                <p>{e.new_price * cartItems[e.id]}đ</p>
+                                <button className="cart-remove-icon" onClick={() => removeFromCart(e.id)}>Xóa</button>
+                            </div>
+                            <hr />
+                        </div>
+                    )
+                }
+                return null;
+            })}
+
             {getTotalCartAmount() > 0 ? (
                 <div className="cart-bottom">
                     <div className="cart-total">
@@ -48,13 +52,20 @@ export const Cart = () => {
                     </div>
                     <div className="cart-buttons">
                         <button onClick={() => navigate('/')}>TIẾP TỤC MUA HÀNG</button>
-                        <button>ĐẶT BÀN</button>
+                        <button onClick={() => navigate('/booking')} className="book-table-btn">
+                            ĐẶT BÀN NGAY
+                        </button>
                     </div>
                 </div>
             ) : (
                 <div className="cart-empty">
                     <h2>Giỏ hàng trống</h2>
-                    <button onClick={() => navigate('/')}>QUAY LẠI MUA HÀNG</button>
+                    <div className="empty-cart-buttons">
+                        <button onClick={() => navigate('/')}>QUAY LẠI MUA HÀNG</button>
+                        <button onClick={() => navigate('/booking')} className="book-table-btn">
+                            ĐẶT BÀN NGAY
+                        </button>
+                    </div>
                 </div>
             )}
         </div>

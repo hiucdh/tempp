@@ -1,13 +1,12 @@
 import React from 'react'
 import './TableStatus.css'
 import table_data from '../Assets/table_data'
+import { useNavigate } from 'react-router-dom'
 
 const TableStatus = () => {
-    // Tính số lượng bàn theo trạng thái
+    const navigate = useNavigate();
     const availableCount = table_data.filter(table => table.status === 'available').length;
     const bookedCount = table_data.filter(table => table.status === 'booked').length;
-
-    // Tính theo loại bàn
     const indoorTables = table_data.filter(table => table.location === 'Trong nhà').length;
     const outdoorTables = table_data.filter(table => table.location === 'Ngoài trời').length;
     const vipTables = table_data.filter(table => table.location === 'Phòng riêng').length;
@@ -16,11 +15,19 @@ const TableStatus = () => {
         <div className='table-status-container'>
             <h2>Trạng thái bàn</h2>
             <div className="table-status-grid">
-                <div className="status-card available">
+                <div
+                    className="status-card available"
+                    onClick={() => navigate('/available-tables')}
+                    style={{ cursor: 'pointer' }}
+                >
                     <h3>Bàn trống</h3>
                     <span className="status-count">{availableCount}</span>
                 </div>
-                <div className="status-card booked">
+                <div
+                    className="status-card booked"
+                    onClick={() => navigate('/booked-tables')}
+                    style={{ cursor: 'pointer' }}
+                >
                     <h3>Bàn đã đặt</h3>
                     <span className="status-count">{bookedCount}</span>
                 </div>

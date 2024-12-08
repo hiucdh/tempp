@@ -11,6 +11,8 @@ import Cart from './Pages/Cart';
 import Product from './Pages/Product';
 import Footer from './Components/Footer/Footer';
 import ShopContextProvider from './Context/ShopContext';
+import AvailableTables from './Pages/AvailableTables';
+import BookedTables from './Pages/BookedTables';
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
           <Route path='/product/:productId' element={<Product />} />
           <Route path='/login' element={<LoginSignup />} />
           <Route path='/cart' element={<Cart />} />
+          <Route path='/available-tables' element={<AvailableTables />} />
+          <Route path='/booked-tables' element={<BookedTables />} />
         </Routes>
         <Footer />
       </BrowserRouter>
