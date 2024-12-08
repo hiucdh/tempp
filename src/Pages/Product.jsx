@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './Product.css'
 import { ShopContext } from '../Context/ShopContext';
 
 export const Product = () => {
     const { productId } = useParams();
+    const navigate = useNavigate();
     const { all_product, addToCart } = useContext(ShopContext);
     const [quantity, setQuantity] = useState(1);
 
@@ -18,7 +19,6 @@ export const Product = () => {
         return <div>Product not found</div>
     }
 
-    // Lấy các món ăn cùng category để gợi ý
     const relatedProducts = all_product.filter(item =>
         item.category === product.category && item.id !== product.id
     ).slice(0, 4);
@@ -32,11 +32,16 @@ export const Product = () => {
     }
 
     const handleAddToCart = () => {
-        // Thêm số lượng sản phẩm vào giỏ hàng
         for (let i = 0; i < quantity; i++) {
             addToCart(product.id);
         }
         alert('Đã thêm món ăn vào giỏ hàng!');
+    }
+
+    const handleRelatedProductClick = (productId) => {
+        navigate(`/product/${productId}`);
+        window.scrollTo(0, 0);
+        setQuantity(1);
     }
 
     return (
@@ -50,7 +55,11 @@ export const Product = () => {
                         <h2>Món ăn liên quan</h2>
                         <div className="related-items">
                             {relatedProducts.map((item) => (
-                                <div key={item.id} className="related-item">
+                                <div
+                                    key={item.id}
+                                    className="related-item"
+                                    onClick={() => handleRelatedProductClick(item.id)}
+                                >
                                     <img src={item.image} alt={item.name} />
                                     <p>{item.name}</p>
                                     <span>{item.new_price}đ</span>
@@ -98,7 +107,7 @@ export const Product = () => {
                         <button className="add-to-cart" onClick={handleAddToCart}>
                             THÊM VÀO GIỎ HÀNG
                         </button>
-                        <button className="buy-now">MUA NGAY</button>
+                        <button className="buy-now">Đặt Bàn</button>
                     </div>
                 </div>
             </div>

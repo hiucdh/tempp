@@ -1,0 +1,271 @@
+.booking-page {
+    padding: 30px 50px;
+}
+
+.booking-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.booking-form-container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.booking-form-container h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.booking-form {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.form-group textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.booking-form button {
+    width: 100%;
+    padding: 15px;
+    background: #ff4141;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.booking-form button:hover {
+    background: #e63939;
+}
+
+.selected-items {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.selected-items h2 {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.selected-items-list {
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.selected-item {
+    display: flex;
+    gap: 20px;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.selected-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.selected-item-info {
+    flex: 1;
+}
+
+.selected-item-info h3 {
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.selected-item-info p {
+    color: #666;
+    margin: 5px 0;
+}
+
+.item-price {
+    color: #ff4141 !important;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.total-amount {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.total-amount h3 {
+    color: #333;
+    font-size: 20px;
+}
+
+.total-amount p {
+    color: #ff4141;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.empty-cart-message {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .booking-container {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .booking-right {
+        position: static;
+    }
+}
+
+@media (max-width: 768px) {
+    .booking-container {
+        padding: 10px;
+    }
+
+    .selected-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .selected-item img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .booking-page {
+        padding: 20px;
+    }
+
+    .booking-form-container {
+        padding: 20px;
+    }
+}
+
+.available-tables {
+    margin: 20px 0;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+}
+
+.available-tables h3 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.tables-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 10px;
+}
+
+.table-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border: 2px solid #eee;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.table-card:hover:not(.booked) {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.table-card.selected {
+    border-color: #ff4141;
+    background: #fff9f9;
+}
+
+.table-card.booked {
+    opacity: 0.7;
+    cursor: not-allowed;
+    background: #f5f5f5;
+}
+
+.table-card h4 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.table-location,
+.table-capacity,
+.table-description,
+.table-status {
+    color: #666;
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.table-status {
+    font-weight: 500;
+}
+
+.table-price {
+    color: #ff4141;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.no-tables {
+    text-align: center;
+    color: #666;
+    padding: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .tables-grid {
+        grid-template-columns: 1fr;
+    }
+}

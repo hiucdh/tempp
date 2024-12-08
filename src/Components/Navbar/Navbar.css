@@ -72,7 +72,7 @@ img {
     background: #f3f3f3;
 }
 
-.cart-icon-count {
+.nav-cart-count {
     width: 22px;
     height: 22px;
     display: flex;
@@ -84,4 +84,24 @@ img {
     font-size: 14px;
     background: red;
     color: white;
+    font-weight: 500;
+}
+
+/* Thêm animation khi số lượng thay đổi */
+@keyframes cartCountChange {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.nav-cart-count {
+    animation: cartCountChange 0.3s ease;
 }

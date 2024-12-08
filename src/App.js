@@ -5,6 +5,7 @@ import HomePage from './Pages/HomePage';
 import Menu from './Pages/Menu';
 import Contact from './Pages/Contact';
 import Rate from './Pages/Rate';
+import Booking from './Pages/Booking';
 import LoginSignup from './Pages/LoginSignup';
 import Cart from './Pages/Cart';
 import Product from './Pages/Product';
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='/menu' element={<Menu />} />
+          <Route path='/booking' element={<Booking />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/rate' element={<Rate />} />
           <Route path='/product/:productId' element={<Product />} />
