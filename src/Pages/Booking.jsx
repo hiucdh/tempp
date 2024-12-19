@@ -3,14 +3,16 @@ import './Booking.css'
 import table_data, { updateTableStatus } from '../Components/Assets/table_data'
 import TableStatus from '../Components/TableStatus/TableStatus'
 import { ShopContext } from '../Context/ShopContext'
+import emailjs from '@emailjs/browser';
 
 export const Booking = () => {
     const [availableTables, setAvailableTables] = useState(table_data);
     const [refreshKey, setRefreshKey] = useState(0);
-    const { clearCart } = useContext(ShopContext);
+    const { clearCart, cartItems, all_product, getTotalCartAmount } = useContext(ShopContext);
     const [bookingData, setBookingData] = useState({
         name: '',
         phone: '',
+        email: '',
         date: '',
         time: '',
         guests: '',
@@ -24,6 +26,7 @@ export const Booking = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
         setBookingData(prev => ({
             ...prev,
             [name]: value
@@ -32,6 +35,56 @@ export const Booking = () => {
         if (name === 'guests') {
             const filtered = table_data.filter(table => table.capacity === value);
             setAvailableTables(filtered);
+        }
+    }
+
+    const handleDateBlur = (e) => {
+        const value = e.target.value;
+        if (value) {  // Chỉ validate khi có giá trị
+            const selectedDate = new Date(value + 'T00:00:00');
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            if (selectedDate < today) {
+                alert('Ngày không hợp lệ');
+                e.target.value = '';
+                setBookingData(prev => ({
+                    ...prev,
+                    date: ''
+                }));
+            }
+        }
+    }
+
+    const handleTimeBlur = (e) => {
+        const value = e.target.value;
+        if (value) {  // Chỉ validate khi có giá trị
+            if (!bookingData.date) {
+                alert('Vui lòng chọn ngày trước!');
+                e.target.value = '';
+                setBookingData(prev => ({
+                    ...prev,
+                    time: ''
+                }));
+                return;
+            }
+
+            const [hours] = value.split(':');
+            const selectedDateTime = new Date(bookingData.date);
+            selectedDateTime.setHours(parseInt(hours), 0, 0, 0);
+
+            const now = new Date();
+
+            if (selectedDateTime.toDateString() === now.toDateString()) {
+                if (parseInt(hours) <= now.getHours()) {
+                    alert('Giờ không hợp lệ');
+                    e.target.value = '';
+                    setBookingData(prev => ({
+                        ...prev,
+                        time: ''
+                    }));
+                }
+            }
         }
     }
 
@@ -46,6 +99,7 @@ export const Booking = () => {
         setBookingData({
             name: '',
             phone: '',
+            email: '',
             date: '',
             time: '',
             guests: '',
@@ -53,6 +107,68 @@ export const Booking = () => {
             selectedTable: ''
         });
     }
+
+    const sendEmail = (bookingInfo) => {
+        // Tạo danh sách món ăn từ giỏ hàng
+        const cartItemsList = all_product
+            .filter(item => cartItems[item.id] > 0)
+            .map(item => `
+                Món: ${item.name}
+                Số lượng: ${cartItems[item.id]}
+                Đơn giá: ${item.new_price.toLocaleString()}đ
+                Thành tiền: ${(item.new_price * cartItems[item.id]).toLocaleString()}đ
+            `).join('\n');
+
+        const selectedTable = table_data.find(table => table.id === bookingData.selectedTable);
+        const totalAmount = getTotalCartAmount().toLocaleString();
+
+        const emailParams = {
+            to_name: bookingInfo.name,
+            to_email: bookingInfo.email,
+            from_name: "Nhà Hàng Vui Vẻ",
+            booking_details: `
+    Kính gửi ${bookingInfo.name},
+
+    Cảm ơn quý khách đã đặt bàn tại Nhà Hàng Vui Vẻ. Dưới đây là thông tin đặt bàn của quý khách:
+
+    THÔNG TIN ĐẶT BÀN:
+    - Tên: ${bookingInfo.name}
+    - Số điện thoại: ${bookingInfo.phone}
+    - Email: ${bookingInfo.email}
+    - Ngày: ${bookingInfo.date}
+    - Giờ: ${bookingInfo.time}
+    - Số người: ${bookingInfo.guests}
+    - Bàn số: ${selectedTable.tableNumber}
+    - Vị trí: ${selectedTable.location}
+    ${selectedTable.price !== "0" ? `- Phụ thu: ${parseInt(selectedTable.price).toLocaleString()}đ\n` : ''}
+    ${bookingInfo.note ? `- Ghi chú: ${bookingInfo.note}\n` : ''}
+
+    DANH SÁCH MÓN ĂN:
+    ${cartItemsList}
+
+    Tổng cộng: ${totalAmount}đ
+
+    Nếu quý khách có bất kỳ thắc mắc nào, vui lòng liên hệ với chúng tôi qua số điện thoại: XXX-XXX-XXXX
+
+    Trân trọng,
+    Nhà Hàng Vui Vẻ
+        `
+        };
+
+        emailjs.send(
+            'service_ay1f916',
+            'template_1u6fzr8',
+            emailParams,
+            'LXAzXRj8M2BWEdZvr'
+        )
+            .then((result) => {
+                console.log('Email sent successfully:', result.text);
+            })
+            .catch((error) => {
+                console.error('Error sending email:', error.text);
+                alert('Có lỗi khi gửi email. Vui lòng thử lại sau!');
+            });
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -67,17 +183,23 @@ export const Booking = () => {
             status: 'confirmed'
         };
 
+        // Lưu thông tin đặt bàn
         const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
         bookings.push(bookingInfo);
         localStorage.setItem('bookings', JSON.stringify(bookings));
 
+        // Cập nhật trạng thái bàn
         const updatedTables = updateTableStatus(bookingData.selectedTable, 'booked');
         setAvailableTables(updatedTables);
-
         setRefreshKey(old => old + 1);
 
+        // Gửi email
+        sendEmail(bookingInfo);
+
+        // Xóa giỏ hàng
         clearCart();
 
+        // Hiển thị thông báo thành công
         const selectedTable = table_data.find(table => table.id === bookingData.selectedTable);
         alert(
             'Đặt bàn thành công!\n\n' +
@@ -89,7 +211,8 @@ export const Booking = () => {
             `Bàn: ${selectedTable.tableNumber}\n` +
             `Vị trí: ${selectedTable.location}\n` +
             (selectedTable.price !== "0" ? `Phụ thu: ${selectedTable.price}đ\n` : '') +
-            (bookingData.note ? `Ghi chú: ${bookingData.note}` : '')
+            (bookingData.note ? `Ghi chú: ${bookingData.note}` : '') +
+            '\n\nThông tin chi tiết đã được gửi qua email!'
         );
 
         resetForm();
@@ -123,12 +246,24 @@ export const Booking = () => {
                             />
                         </div>
                         <div className="form-group">
+                            <label>Email</label>
+                            <input
+                                type="email"
+                                name="email"
+                                value={bookingData.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
                             <label>Ngày</label>
                             <input
                                 type="date"
                                 name="date"
                                 value={bookingData.date}
                                 onChange={handleChange}
+                                onBlur={handleDateBlur}
+                                min={new Date().toISOString().split('T')[0]}
                                 required
                             />
                         </div>
@@ -138,12 +273,20 @@ export const Booking = () => {
                                 name="time"
                                 value={bookingData.time}
                                 onChange={handleChange}
+                                onBlur={handleTimeBlur}
                                 required
                             >
                                 <option value="">Chọn giờ</option>
                                 <option value="11:00">11:00</option>
                                 <option value="12:00">12:00</option>
                                 <option value="13:00">13:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                                <option value="18:00">18:00</option>
+                                <option value="19:00">19:00</option>
+                                <option value="20:00">20:00</option>
                             </select>
                         </div>
                         <div className="form-group">
