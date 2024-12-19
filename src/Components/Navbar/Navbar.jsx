@@ -25,7 +25,7 @@ export const Navbar = () => {
         <div className='navbar'>
             <div className="nav-logo">
                 <img src={logo} alt='' />
-                <p>RESTAURANT</p>
+                <Link to='/' style={{ textDecoration: 'none' }}><p>RESTAURANT</p></Link>
             </div>
             <ul className="nav-menu">
                 <li onClick={() => { setMenu("main") }}>
