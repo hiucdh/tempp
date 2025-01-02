@@ -11,7 +11,7 @@ import ncl6 from './ncl6.webp'
 import ncl7 from './ncl7.webp'
 import ncl8 from './ncl8.webp'
 
-const all_product = [
+export const all_product = [
     {
         id: 1,
         name: "Gà nướng muối ớt",
