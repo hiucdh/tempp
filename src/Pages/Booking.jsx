@@ -6,7 +6,7 @@ import { ShopContext } from '../Context/ShopContext'
 import emailjs from '@emailjs/browser';
 
 export const Booking = () => {
-    const [availableTables, setAvailableTables] = useState(table_data);
+    const [tables, setTables] = useState([]);
     const [refreshKey, setRefreshKey] = useState(0);
     const { clearCart, cartItems, all_product, getTotalCartAmount } = useContext(ShopContext);
     const [bookingData, setBookingData] = useState({
@@ -21,7 +21,12 @@ export const Booking = () => {
     });
 
     useEffect(() => {
-        setAvailableTables(table_data);
+        const savedTables = localStorage.getItem('tables');
+        if (savedTables) {
+            setTables(JSON.parse(savedTables));
+        } else {
+            setTables(table_data);
+        }
     }, [refreshKey]);
 
     const handleChange = (e) => {
@@ -33,8 +38,12 @@ export const Booking = () => {
         }));
 
         if (name === 'guests') {
-            const filtered = table_data.filter(table => table.capacity === value);
-            setAvailableTables(filtered);
+            const guestCount = parseInt(value);
+            const filtered = tables.filter(table => {
+                const tableCapacity = parseInt(table.capacity);
+                return tableCapacity >= guestCount;
+            });
+            setTables(filtered);
         }
     }
 
@@ -119,7 +128,7 @@ export const Booking = () => {
                 Thành tiền: ${(item.new_price * cartItems[item.id]).toLocaleString()}đ
             `).join('\n');
 
-        const selectedTable = table_data.find(table => table.id === bookingData.selectedTable);
+        const selectedTable = tables.find(table => table.id === bookingData.selectedTable);
         const totalAmount = getTotalCartAmount().toLocaleString();
 
         const emailParams = {
@@ -170,61 +179,58 @@ export const Booking = () => {
             });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!bookingData.selectedTable) {
-            alert('Vui lòng chọn bàn!');
-            return;
+
+        try {
+            const updatedTables = tables.map(table => {
+                if (table.id === Number(bookingData.selectedTable)) {
+                    return { ...table, status: 'booked' };
+                }
+                return table;
+            });
+
+            localStorage.setItem('tables', JSON.stringify(updatedTables));
+            setTables(updatedTables);
+
+            const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+            bookings.push(bookingData);
+            localStorage.setItem('bookings', JSON.stringify(bookings));
+
+            sendEmail(bookingData);
+
+            clearCart();
+
+            alert(
+                'Đặt bàn thành công!\n\n' +
+                `Tên: ${bookingData.name}\n` +
+                `Số điện thoại: ${bookingData.phone}\n` +
+                `Ngày: ${bookingData.date}\n` +
+                `Giờ: ${bookingData.time}\n` +
+                `Số người: ${bookingData.guests}\n` +
+                `Bàn: ${tables.find(table => table.id === bookingData.selectedTable).tableNumber}\n` +
+                `Vị trí: ${tables.find(table => table.id === bookingData.selectedTable).location}\n` +
+                (tables.find(table => table.id === bookingData.selectedTable).price !== "0" ? `Phụ thu: ${tables.find(table => table.id === bookingData.selectedTable).price}đ\n` : '') +
+                (bookingData.note ? `Ghi chú: ${bookingData.note}` : '') +
+                '\n\nThông tin chi tiết đã được gửi qua email!'
+            );
+
+            resetForm();
+
+            setRefreshKey(prev => prev + 1);
+        } catch (error) {
+            console.error('Booking error:', error);
+            alert('Có lỗi xảy ra khi đặt bàn. Vui lòng thử lại!');
         }
-
-        const bookingInfo = {
-            ...bookingData,
-            bookingTime: new Date().toISOString(),
-            status: 'confirmed'
-        };
-
-        // Lưu thông tin đặt bàn
-        const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
-        bookings.push(bookingInfo);
-        localStorage.setItem('bookings', JSON.stringify(bookings));
-
-        // Cập nhật trạng thái bàn
-        const updatedTables = updateTableStatus(bookingData.selectedTable, 'booked');
-        setAvailableTables(updatedTables);
-        setRefreshKey(old => old + 1);
-
-        // Gửi email
-        sendEmail(bookingInfo);
-
-        // Xóa giỏ hàng
-        clearCart();
-
-        // Hiển thị thông báo thành công
-        const selectedTable = table_data.find(table => table.id === bookingData.selectedTable);
-        alert(
-            'Đặt bàn thành công!\n\n' +
-            `Tên: ${bookingData.name}\n` +
-            `Số điện thoại: ${bookingData.phone}\n` +
-            `Ngày: ${bookingData.date}\n` +
-            `Giờ: ${bookingData.time}\n` +
-            `Số người: ${bookingData.guests}\n` +
-            `Bàn: ${selectedTable.tableNumber}\n` +
-            `Vị trí: ${selectedTable.location}\n` +
-            (selectedTable.price !== "0" ? `Phụ thu: ${selectedTable.price}đ\n` : '') +
-            (bookingData.note ? `Ghi chú: ${bookingData.note}` : '') +
-            '\n\nThông tin chi tiết đã được gửi qua email!'
-        );
-
-        resetForm();
     }
 
     return (
         <div className='booking-page'>
-            <TableStatus key={refreshKey} />
-            <div className='booking-container'>
-                <div className='booking-form-container'>
+            <div className="booking-container">
+                <TableStatus tables={tables} />
+                <div className="booking-form-container">
                     <h1>Đặt bàn</h1>
-                    <form onSubmit={handleSubmit} className="booking-form">
+                    <form className="booking-form" onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label>Họ và tên</label>
                             <input
@@ -308,7 +314,7 @@ export const Booking = () => {
                         <div className="available-tables">
                             <h3>Danh sách bàn</h3>
                             <div className="tables-grid">
-                                {availableTables.map((table) => (
+                                {tables.filter(table => table.status === 'available').map((table) => (
                                     <div
                                         key={table.id}
                                         className={`table-card ${bookingData.selectedTable === table.id ? 'selected' : ''} ${table.status === 'booked' ? 'booked' : ''}`}
