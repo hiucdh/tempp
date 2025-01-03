@@ -1,70 +1,49 @@
-# Getting Started with Create React App
+# Nhà Hàng Vui Vẻ - Restaurant Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 📝 Mô tả
+Một website nhà hàng hiện đại được xây dựng bằng React, cho phép người dùng xem menu, đặt bàn và đặt món trực tuyến. Website bao gồm các chức năng chính như quản lý giỏ hàng, đặt bàn với email xác nhận, và hệ thống đánh giá.
+// chỉ viết bằng front-end thuần và không có database
+## ⚡ Tính năng
+- 🍽️ Xem menu với bộ lọc theo danh mục
+- 🛒 Thêm món ăn vào giỏ hàng
+- 📅 Đặt bàn với xác nhận qua email
+- ⭐ Hệ thống đánh giá và nhận xét
+- 👤 Đăng nhập/Đăng ký tài khoản
+- 📱 Giao diện chưa có reponsive
 
-## Available Scripts
+## 🛠️ Công nghệ sử dụng
+- **React**: ^18.2.0 - Thư viện JavaScript để xây dựng giao diện người dùng
+- **React Router**: ^6.x - Quản lý định tuyến trong ứng dụng
+- **Context API** - Quản lý state toàn cục
+- **EmailJS**: ^3.x - Gửi email xác nhận đặt bàn
+- **React Toastify**: ^9.x - Hiển thị thông báo
+- **Font Awesome** - Thư viện icon
+- **LocalStorage** - Lưu trữ dữ liệu cục bộ
 
-In the project directory, you can run:
+## 🚀 Cài đặt và Chạy
+1. Clone repository
+2. Cài đặt các thư viện có trong đó:
+   npm i 
+   npm i react-router-dom react-router
+   npm i react-toastify 
+4. Chạy ứng dụng
+   npm start
 
-### `npm start`
+## 🙏 Lời cảm ơn
+Xin chân thành cảm ơn các nguồn tài nguyên và thư viện mã nguồn mở đã giúp dự án này có thể hoàn thành:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Cộng đồng Stack Overflow vì những giải pháp hữu ích
+- Cảm ơn tất cả các nội dung mà các thành viên trong nhóm đã góp ý
+- Cảm ơn cô Như Ý đã giảng dạy em trong quá trình vừa qua
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+## 👥 Tác giả
+[hiucdh] - [https://github.com/hiucdh]
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Các thành viên đã tham gia hoàn thành dự án
+- Vẽ khung web: Hiếu
+- Ý tưởng: Hiếu
+- Thực hiện: Hiếu
+- Debug: Hiếu
+- Bảo trì: Hiếu
+- Đau lưng gãy cột sống: Hiếu
