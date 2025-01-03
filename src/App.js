@@ -15,6 +15,7 @@ import AvailableTables from './Pages/AvailableTables';
 import BookedTables from './Pages/BookedTables';
 import { AuthProvider } from './Context/AuthContext';
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -49,6 +50,17 @@ function App() {
           <Footer />
         </BrowserRouter>
       </ShopContextProvider>
+      <ToastContainer position="top-center"
+        autoClose={800}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </AuthProvider>
   );
 }

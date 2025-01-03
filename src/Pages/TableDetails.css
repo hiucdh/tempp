@@ -77,6 +77,81 @@
     background: #e63939;
 }
 
+/* Styles cho phần thêm bàn */
+.add-table-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.add-table-btn {
+    padding: 12px 24px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.add-table-btn:hover {
+    background: #45a049;
+}
+
+.add-table-form {
+    max-width: 600px;
+    margin: 0 auto 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-table-form .form-group {
+    margin-bottom: 15px;
+}
+
+.add-table-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: 500;
+}
+
+.add-table-form input,
+.add-table-form select,
+.add-table-form textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.add-table-form textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.submit-table-btn {
+    width: 100%;
+    padding: 12px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+}
+
+.submit-table-btn:hover {
+    background: #45a049;
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
     .table-details-page {
         padding: 20px;
@@ -84,5 +159,9 @@
 
     .tables-container {
         grid-template-columns: 1fr;
+    }
+
+    .add-table-form {
+        margin: 0 20px 30px;
     }
 }

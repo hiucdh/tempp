@@ -62,7 +62,7 @@ export const Cart = () => {
                         <p>{getTotalCartAmount()}đ</p>
                     </div>
                     <div className="cart-buttons">
-                        <button onClick={() => navigate('/')}>TIẾP TỤC MUA HÀNG</button>
+                        <button onClick={() => navigate('/menu')}>TIẾP TỤC MUA HÀNG</button>
                         <button onClick={handleBookingClick} className="book-table-btn">
                             ĐẶT BÀN NGAY
                         </button>
@@ -72,7 +72,7 @@ export const Cart = () => {
                 <div className="cart-empty">
                     <h2>Giỏ hàng trống</h2>
                     <div className="empty-cart-buttons">
-                        <button onClick={() => navigate('/')}>QUAY LẠI MUA HÀNG</button>
+                        <button onClick={() => navigate('/menu')}>QUAY LẠI MUA HÀNG</button>
                         <button onClick={handleBookingClick} className="book-table-btn">
                             ĐẶT BÀN NGAY
                         </button>

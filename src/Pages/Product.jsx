@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './Product.css'
 import { ShopContext } from '../Context/ShopContext';
 import { AuthContext } from '../Context/AuthContext';
-
+import { toast } from 'react-toastify';
 export const Product = () => {
     const { productId } = useParams();
     const navigate = useNavigate();
@@ -21,7 +21,7 @@ export const Product = () => {
         }
         navigate('/booking');
     }
-
+    const notify = () => toast('Đã thêm vào giỏ hàng');
     // Format giá tiền
     const formatPrice = (price) => {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -54,7 +54,9 @@ export const Product = () => {
                             for (let i = 0; i < quantity; i++) {
                                 addToCart(product.id);
                             }
-                            alert('Đã thêm vào giỏ hàng!');
+
+                            notify();
+
                         }} className="add-to-cart">
                             THÊM VÀO GIỎ HÀNG
                         </button>
