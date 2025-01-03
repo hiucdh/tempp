@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import './Booking.css'
-import table_data, { updateTableStatus } from '../Components/Assets/table_data'
+import table_data from '../Components/Assets/table_data'
 import TableStatus from '../Components/TableStatus/TableStatus'
 import { ShopContext } from '../Context/ShopContext'
 import emailjs from '@emailjs/browser';
